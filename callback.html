@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>TikTok Auth Callback</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 80px; background: #0a0a0a; color: #fff; }
+    h1 { color: #a855f7; }
+    code { background: #1a1a2e; padding: 10px 20px; border-radius: 8px; display: block; margin: 20px auto; max-width: 600px; word-break: break-all; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>✅ TikTok Authorization</h1>
+  <p>Código recebido! Copie e cole no terminal:</p>
+  <code id="code">Carregando...</code>
+  <p id="msg"></p>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const error = params.get('error');
+    if (code) {
+      document.getElementById('code').textContent = 'code=' + code;
+      document.getElementById('msg').textContent = 'Cole esse código no terminal quando solicitado.';
+    } else if (error) {
+      document.getElementById('code').textContent = 'Erro: ' + error;
+      document.getElementById('code').style.color = '#ef4444';
+    } else {
+      document.getElementById('code').textContent = 'Nenhum código recebido.';
+    }
+  </script>
+</body>
+</html>
