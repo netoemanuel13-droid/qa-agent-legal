@@ -158,7 +158,11 @@ async function generateQaContent(topic, count = 3) {
       const toolUseBlocks = finalResponse.content.filter(b => b.type === 'tool_use');
 
       // Append the assistant turn before sending tool results
-      messages.push({ role: 'assistant', content: finalResponse.content });
+      // Filter out empty text blocks — the API rejects them with 400
+      const assistantContent = finalResponse.content.filter(
+        b => b.type !== 'text' || b.text.length > 0
+      );
+      messages.push({ role: 'assistant', content: assistantContent });
 
       const toolResults = toolUseBlocks.map(tu => {
         console.log(`\n🔧 ${tu.name}(${JSON.stringify(tu.input).slice(0, 60)}…)`);
